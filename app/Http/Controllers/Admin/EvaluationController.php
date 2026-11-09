@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\AuditLog;
 use App\Models\Evaluation;
 use App\Models\Room;
+use App\Services\PaperFormRenderer;
 use Illuminate\Http\Request;
 
 class EvaluationController extends Controller
@@ -41,6 +42,61 @@ class EvaluationController extends Controller
         }
 
         return view('admin.evaluations.show', compact('evaluation', 'groups'));
+    }
+
+    /** One response printed on the ISO paper form. */
+    public function printForm(Evaluation $evaluation, PaperFormRenderer $renderer)
+    {
+        $evaluation->load('room');
+
+        if (!$renderer->hasMatchingAnswers($evaluation->answers)) {
+            return back()->withErrors(['form' => 'This response was submitted on a different form layout, so it cannot be placed on the paper form.']);
+        }
+
+        AuditLog::record('response.printed_on_form', '#'.$evaluation->id);
+
+        return $renderer->page(
+            $renderer->sheet($this->paperAnswers($evaluation)),
+            'Response <b>#'.$evaluation->id.'</b> · '.e($evaluation->room->name).' · '.$evaluation->created_at->format('M j, Y g:i A').'.',
+            route('admin.evaluations.show', $evaluation)
+        );
+    }
+
+    /** All responses matching the current filters, one sheet each (max 100). */
+    public function printMany(Request $request, PaperFormRenderer $renderer)
+    {
+        $filters = $this->filters($request);
+        $rows = Evaluation::with('room')->filter($filters)->counted()->orderBy('id')->limit(101)->get();
+
+        if ($rows->isEmpty()) {
+            return back()->withErrors(['form' => 'No responses match the filters.']);
+        }
+
+        $capped = $rows->count() > 100;
+        $rows = $rows->take(100);
+        $sheets = $rows->filter(fn ($e) => $renderer->hasMatchingAnswers($e->answers))
+            ->map(fn ($e) => $renderer->sheet($this->paperAnswers($e)))->implode('');
+
+        if ($sheets === '') {
+            return back()->withErrors(['form' => 'None of these responses use the paper form layout.']);
+        }
+
+        AuditLog::record('response.printed_on_form', $rows->count().' response(s)');
+
+        return $renderer->page(
+            $sheets,
+            '<b>'.$rows->count().' sheet'.($rows->count() === 1 ? '' : 's').'</b> (oldest first)'.($capped ? ', limited to 100. Narrow the filters to print the rest' : '').'.',
+            route('admin.evaluations.index', $filters)
+        );
+    }
+
+    /** Answers plus sensible fallbacks for cells the respondent left empty. */
+    private function paperAnswers(Evaluation $evaluation): array
+    {
+        $answers = $evaluation->answers;
+        $answers += ['room_no' => $evaluation->room->name, 'date' => $evaluation->created_at->toDateString()];
+
+        return $answers;
     }
 
     public function status(Request $request, Evaluation $evaluation)

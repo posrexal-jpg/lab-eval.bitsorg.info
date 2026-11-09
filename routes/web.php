@@ -47,6 +47,8 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
 
     // Responses
     Route::get('evaluations', [Admin\EvaluationController::class, 'index'])->name('evaluations.index');
+    Route::get('evaluations/print-form', [Admin\EvaluationController::class, 'printMany'])->name('evaluations.print-many');
+    Route::get('evaluations/{evaluation}/form', [Admin\EvaluationController::class, 'printForm'])->name('evaluations.print-form');
     Route::get('evaluations/{evaluation}', [Admin\EvaluationController::class, 'show'])->name('evaluations.show');
     Route::patch('evaluations/{evaluation}/status', [Admin\EvaluationController::class, 'status'])->name('evaluations.status');
     Route::delete('evaluations/{evaluation}', [Admin\EvaluationController::class, 'destroy'])->name('evaluations.destroy');

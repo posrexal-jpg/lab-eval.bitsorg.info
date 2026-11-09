@@ -8,7 +8,8 @@
         <div class="muted">{{ $evaluation->room->name }} · {{ $evaluation->created_at->format('F j, Y g:i A') }} · {{ $evaluation->template->name }} v{{ $evaluation->template->version }}</div>
     </div>
     <div class="actions">
-        <button class="btn" type="button" data-print>Print</button>
+        <a class="btn" href="{{ route('admin.evaluations.print-form', $evaluation) }}" target="_blank">Print on ISO form</a>
+        <button class="btn ghost" type="button" data-print>Print summary</button>
         <a class="btn ghost" href="{{ route('admin.evaluations.index') }}">Back</a>
     </div>
 </div>

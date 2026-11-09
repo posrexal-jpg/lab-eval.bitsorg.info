@@ -50,7 +50,7 @@ Locked out? `php artisan lab:create-admin someone@school.edu.ph --super`
 | **Evaluation page** | Opened by scanning the QR, mobile-friendly, validates every answer against the template, room and today’s date pre-filled, answers restored after an error |
 | **Monitor** | Per-room today / 7-day counts and averages, "needs attention" flag under the threshold, auto-refresh, printable monitoring sheet with signature lines |
 | **Paper form** | Prints your A4 form (`resources/print/paper-form.html`) exactly as designed: blank, pre-filled for one room or every room, with the number of copies you choose |
-| **Responses** | Filter by room / date / score / status, view and print a single response, flag / hide (spam) / delete |
+| **Responses** | Filter by room / date / score / status, **print one or many responses on your ISO form** (answers ticked and filled in), view a single response, flag / hide (spam) / delete |
 | **Reports** | Overall average with 5-point interpretation, rating distribution, by room, by respondent type, by criterion (grouped by form section), three lowest criteria, all written comments, printable with signature lines, CSV export (Excel-safe, formula-injection protected) |
 
 ## Rate limiting and abuse protection
@@ -78,6 +78,7 @@ Rate limits use the cache, so use `file`, `database` or `redis` (not `array`). B
 - `<tr class="section"><td>1. FACILITIES</td></tr>` groups the questions that follow it.
 - Add `required` to make an item mandatory.
 - Field names `respondent_type` and `room_no` get special treatment (respondent breakdown, prefill with the room name).
+- The paper form (`resources/print/paper-form.html`) matches answers by field name (`q1`..`q11`, `respondent_type`, `room_no`, ...). Responses from a differently named template cannot be placed on it.
 - Download the bundled sample from **Form templates → Download sample .html**.
 
 ## Notes

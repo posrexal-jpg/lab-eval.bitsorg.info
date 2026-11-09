@@ -2,7 +2,10 @@
 @section('title', 'Responses')
 @section('content')
 <div class="page-head"><div><h1>Responses</h1><div class="muted">{{ $evaluations->total() }} found</div></div>
-    <div class="actions"><a class="btn ghost" href="{{ route('admin.reports.export', $filters) }}">Export CSV</a></div>
+    <div class="actions">
+        <a class="btn" href="{{ route('admin.evaluations.print-many', $filters) }}" target="_blank">Print these on ISO form</a>
+        <a class="btn ghost" href="{{ route('admin.reports.export', $filters) }}">Export CSV</a>
+    </div>
 </div>
 
 <form class="card filters" method="GET">
@@ -30,7 +33,7 @@
                 <td>{{ $e->room->name }}</td>
                 <td class="num">{{ $e->average_score !== null ? number_format($e->average_score, 2) : '–' }}</td>
                 <td><span class="badge {{ $e->status === 'visible' ? 'muted' : ($e->status === 'flagged' ? 'warn' : 'bad') }}">{{ $e->status }}</span></td>
-                <td class="right"><a class="btn sm ghost" href="{{ route('admin.evaluations.show', $e) }}">View</a></td>
+                <td class="right nowrap"><a class="btn sm ghost" href="{{ route('admin.evaluations.show', $e) }}">View</a> <a class="btn sm ghost" href="{{ route('admin.evaluations.print-form', $e) }}" target="_blank">Print form</a></td>
             </tr>
         @empty
             <tr><td colspan="6" class="muted">No responses match.</td></tr>

@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('title', 'Print paper form')
 @section('content')
-<div class="page-head"><div><h1>Print paper form</h1><div class="muted">The A4 Computer Laboratory User Satisfaction Form, ready for printing and photocopying.</div></div></div>
+<div class="page-head"><div><h1>Print paper form</h1><div class="muted">Blank copies of the A4 ISO form for photocopying. To print a submitted response on the form, open it under Responses.</div></div></div>
 
 <div class="card form-narrow">
     <form method="GET" action="{{ route('admin.paper-form.print') }}" target="_blank">
@@ -15,7 +15,7 @@
             <div class="muted small">Fills the “Laboratory / Room No.” cell and ticks “Computer Laboratory 1/2/3” when the room name matches.</div>
         </div>
         <div class="field">
-            <label class="f" for="copies">Copies {{ '(per room)' }}</label>
+            <label class="f" for="copies">Copies (per room)</label>
             <input id="copies" type="number" name="copies" value="{{ old('copies', 1) }}" min="1" max="200" required>
         </div>
         <label class="check field"><input type="checkbox" name="fill_date" value="1"> Pre-fill today’s date ({{ now()->format('F j, Y') }})</label>
