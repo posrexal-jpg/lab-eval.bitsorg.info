@@ -17,10 +17,12 @@ class SecurityHeaders
         $response->headers->set('Referrer-Policy', 'same-origin');
         $response->headers->set('Permissions-Policy', 'camera=(), microphone=(), geolocation=()');
         // No inline scripts anywhere in the app, so scripts are limited to our own files.
-        $response->headers->set(
-            'Content-Security-Policy',
-            "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
-        );
+        if (!$response->headers->has('Content-Security-Policy')) { // a response may set its own (paper form)
+            $response->headers->set(
+                'Content-Security-Policy',
+                "default-src 'self'; img-src 'self' data:; style-src 'self' 'unsafe-inline'; script-src 'self'; form-action 'self'; frame-ancestors 'none'; base-uri 'none'"
+            );
+        }
 
         return $response;
     }

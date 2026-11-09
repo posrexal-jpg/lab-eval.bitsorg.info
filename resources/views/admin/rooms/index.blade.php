@@ -6,6 +6,7 @@
     <div><h1>Rooms &amp; QR codes</h1><div class="muted">Each room has its own QR code that opens the active evaluation form.</div></div>
     <div class="actions">
         <a class="btn ghost" href="{{ route('admin.rooms.qr-print') }}" target="_blank">Print all QR codes</a>
+        <a class="btn ghost" href="{{ route('admin.paper-form') }}">Print paper form</a>
         <a class="btn" href="{{ route('admin.rooms.create') }}">Add room</a>
     </div>
 </div>

@@ -49,6 +49,7 @@ Locked out? `php artisan lab:create-admin someone@school.edu.ph --super`
 | **Form templates** | Upload any `.html` form, it is sanitized and its fields detected automatically, preview, versioning, one live template at a time, old responses keep their version |
 | **Evaluation page** | Opened by scanning the QR, mobile-friendly, validates every answer against the template, room and today’s date pre-filled, answers restored after an error |
 | **Monitor** | Per-room today / 7-day counts and averages, "needs attention" flag under the threshold, auto-refresh, printable monitoring sheet with signature lines |
+| **Paper form** | Prints your A4 form (`resources/print/paper-form.html`) exactly as designed: blank, pre-filled for one room or every room, with the number of copies you choose |
 | **Responses** | Filter by room / date / score / status, view and print a single response, flag / hide (spam) / delete |
 | **Reports** | Overall average with 5-point interpretation, rating distribution, by room, by respondent type, by criterion (grouped by form section), three lowest criteria, all written comments, printable with signature lines, CSV export (Excel-safe, formula-injection protected) |
 

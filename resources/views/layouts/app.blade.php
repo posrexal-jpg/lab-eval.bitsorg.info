@@ -19,6 +19,7 @@
             <a href="{{ route('admin.dashboard') }}" class="{{ request()->routeIs('admin.dashboard') ? 'active' : '' }}">Dashboard</a>
             <a href="{{ route('admin.monitor') }}" class="{{ request()->routeIs('admin.monitor') ? 'active' : '' }}">Monitor</a>
             <a href="{{ route('admin.rooms.index') }}" class="{{ request()->routeIs('admin.rooms.*') ? 'active' : '' }}">Rooms &amp; QR codes</a>
+            <a href="{{ route('admin.paper-form') }}" class="{{ request()->routeIs('admin.paper-form*') ? 'active' : '' }}">Print paper form</a>
             <a href="{{ route('admin.evaluations.index') }}" class="{{ request()->routeIs('admin.evaluations.*') ? 'active' : '' }}">Responses</a>
             <a href="{{ route('admin.reports') }}" class="{{ request()->routeIs('admin.reports') ? 'active' : '' }}">Reports</a>
             <a href="{{ route('admin.templates.index') }}" class="{{ request()->routeIs('admin.templates.*') ? 'active' : '' }}">Form templates</a>

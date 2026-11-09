@@ -41,6 +41,10 @@ Route::prefix('admin')->name('admin.')->middleware(['auth', 'admin'])->group(fun
     Route::post('templates/{template}/activate', [Admin\TemplateController::class, 'activate'])->name('templates.activate');
     Route::resource('templates', Admin\TemplateController::class)->only(['index', 'create', 'show', 'destroy']);
 
+    // Paper form
+    Route::get('paper-form', [Admin\PaperFormController::class, 'index'])->name('paper-form');
+    Route::get('paper-form/print', [Admin\PaperFormController::class, 'print'])->name('paper-form.print');
+
     // Responses
     Route::get('evaluations', [Admin\EvaluationController::class, 'index'])->name('evaluations.index');
     Route::get('evaluations/{evaluation}', [Admin\EvaluationController::class, 'show'])->name('evaluations.show');
